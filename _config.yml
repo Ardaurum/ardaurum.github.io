@@ -18,18 +18,28 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 
-title: Radek on Game Programming
+title: Rad On Development
 description: >- # this means to ignore newlines until "baseurl:"
   Blog about my learnings in game programming and more.
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "" # the base hostname & protocol for your site, e.g. http://example.com
+url: "http://radondev.com" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: RadekPaszkowski
 github_username:  ardaurum
+linkedin_username: rpaszkowski
+permalink: /:title/
 
 # Build settings
 theme: jekyll-theme-hacker
 plugins:
   - jekyll-feed
+  - jekyll-paginate
+  - jekyll-seo-tag
+  - jekyll-sitemap 
+
+markdown: kramdown
+paginate: 5
+paginate_path: "/:num"
+date_format: "%b %-d, %Y"
 
 highlighter: rouge
 kramdown:
@@ -55,3 +65,5 @@ kramdown:
 #   - vendor/cache/
 #   - vendor/gems/
 #   - vendor/ruby/
+exclude:
+  - vendor/

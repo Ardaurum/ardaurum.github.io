@@ -1,0 +1,28 @@
+---
+layout: default
+title: Categories
+permalink: /categories/
+---
+
+<div class="categories">
+
+	<h1 class="page-heading">Categories</h1>
+
+  {% assign categories = site.categories | sort %}
+  {% for category in categories %}
+
+    {% assign categoryName = category[0] %}
+    {% assign categoryPostsNumber = category[1] | size %}
+    <h2> {{ categoryName }} - {{ categoryPostsNumber }} </h2>
+    
+    <ul class="post-list">
+      {% assign sortedPosts = category[1] | reversed %}
+      {% for post in sortedPosts %}
+        <li>
+          <a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a><span> - {{ post.date | date: "%b %-d, %Y" }}</span>
+        </li>
+      {% endfor %}
+    </ul>
+  {% endfor %}
+</div>
+  
