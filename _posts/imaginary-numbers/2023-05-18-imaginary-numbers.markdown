@@ -41,8 +41,12 @@ And now we can add two complex numbers using $$ \class{palette-0}{r_1} $$ and $$
 $$
 \begin{align*}
 & (\class{palette-0}{r_1} \cos(\class{palette-1}{\alpha}) + i \class{palette-0}{r_1} \sin(\class{palette-1}{\alpha})) \cdot (\class{palette-0}{r_2} \cos(\class{palette-1}{\beta}) + i \class{palette-0}{r_2} \sin(\class{palette-1}{\beta})) \\
-=&\: \class{palette-0}{r_1} \cos(\class{palette-1}{\alpha}) \cdot \class{palette-0}{r_2} \cos(\class{palette-1}{\beta}) - \class{palette-0}{r_1} \sin(\class{palette-1}{\alpha}) \cdot \class{palette-0}{r_2} \sin(\class{palette-1}{\beta}) + i (\class{palette-0}{r_1} \cos(\class{palette-1}{\alpha}) \cdot \class{palette-0}{r_2} \sin(\class{palette-1}{\beta}) + \class{palette-0}{r_1} \sin(\class{palette-1}{\alpha}) \cdot \class{palette-0}{r_2} \cos(\class{palette-1}{\beta})) \\
-=&\: \class{palette-0}{r_1} \cdot \class{palette-0}{r_2} \cdot ((\cos(\class{palette-1}{\alpha}) \cos(\class{palette-1}{\beta}) - \sin(\class{palette-1}{\alpha}) \sin(\class{palette-1}{\beta})) + i (\cos(\class{palette-1}{\alpha}) \sin(\class{palette-1}{\beta}) + \sin(\class{palette-1}{\alpha}) \cos(\class{palette-1}{\beta}))) \\
+\\
+=&\: \class{palette-0}{r_1} \cos(\class{palette-1}{\alpha}) \cdot \class{palette-0}{r_2} \cos(\class{palette-1}{\beta}) - \class{palette-0}{r_1} \sin(\class{palette-1}{\alpha}) \cdot \class{palette-0}{r_2} \sin(\class{palette-1}{\beta}) \\
+&+ i (\class{palette-0}{r_1} \cos(\class{palette-1}{\alpha}) \cdot \class{palette-0}{r_2} \sin(\class{palette-1}{\beta}) + \class{palette-0}{r_1} \sin(\class{palette-1}{\alpha}) \cdot \class{palette-0}{r_2} \cos(\class{palette-1}{\beta})) \\
+\\
+=&\: \class{palette-0}{r_1} \cdot \class{palette-0}{r_2} \cdot ((\cos(\class{palette-1}{\alpha}) \cos(\class{palette-1}{\beta}) - \sin(\class{palette-1}{\alpha}) \sin(\class{palette-1}{\beta})) \\
+&+ i (\cos(\class{palette-1}{\alpha}) \sin(\class{palette-1}{\beta}) + \sin(\class{palette-1}{\alpha}) \cos(\class{palette-1}{\beta}))) \\
 \end{align*} 
 $$
 
@@ -169,7 +173,10 @@ $$
 where $$ x + iy $$ is a unit complex number that describes the rotation by $$ \theta $$. But where do we get the equation $$ (3) $$? We can do it using the **Taylor Series**. This is worth another post so for now you have to believe me when I write the Taylor series of euler's form of the complex number which is:
 
 $$
-e^{i\theta} = 1 + ix - \frac{x^2}{2!} - \frac{ix^3}{3!} + \frac{x^4}{4!} + \frac{ix^5}{5!} - \cdots = (1 - \frac{x^2}{2!} + \frac{x^4}{4!} - \cdots) + i(x - \frac{x^3}{3!} + \frac{x^5}{5!} - \cdots)
+\begin{align*}
+e^{i\theta} &= 1 + ix - \frac{x^2}{2!} - \frac{ix^3}{3!} + \frac{x^4}{4!} + \frac{ix^5}{5!} - \cdots \\
+&= (1 - \frac{x^2}{2!} + \frac{x^4}{4!} - \cdots) + i(x - \frac{x^3}{3!} + \frac{x^5}{5!} - \cdots)
+\end{align*}
 $$
 
 If we compare that to the **Taylor Series** for *cos* and *sin* which are:
