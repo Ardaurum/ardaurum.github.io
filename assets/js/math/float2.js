@@ -60,6 +60,6 @@ export class float2 {
   }
 
   normalize() {
-    return v.divScalar(v.length());
+    return this.divScalar(this.length());
   }
 }

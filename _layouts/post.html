@@ -6,11 +6,14 @@ layout: default
   <header class="post-header">
     <h1 class="post-title">{{ page.title }}</h1>
     <p class="post-meta">{{ page.date | date: "%b %-d, %Y" }}{% if page.author %} • {{ page.author }}{% endif %}{% if page.meta %} • {{ page.meta }}{% endif %}</p>
-		<script id="full-screen-triangle" type="x-shader/x-vertex" src="../assets/shaders/fullScreenTriangle_vert.shader"></script>
-		<script type="module" src="../assets/vendor/pixi.min.js"></script>
-		<script type="module" src="../assets/vendor/three.min.js"></script>
+		<script id="full-screen-triangle" type="x-shader/x-vertex">
+      {% include shaders/fullScreenTriangle_vert.shader %}
+    </script>
+		<script type="module" src="../assets/external/pixi.min.mjs"></script>
+		<script type="module" src="../assets/external/three.min.js"></script>
 		<script type="module" src="../assets/js/cartesianDrawer.js"></script>
 		<script type="module" src="../assets/js/canvasScripts.js"></script>
+    <script type="module" src="../assets/js/graphics/palette.js"></script>
   </header>
 
   <article class="post-content">
@@ -21,13 +24,17 @@ layout: default
 <script type="module" src="../assets/js/webGLRenderer.js"></script>
 <script type="module" src="../assets/js/canvasRenderer.js"></script>
 
-<script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-  tex2jax: {
-    inlineMath: [['$','$'], ['\\(','\\)']],
-    processEscapes: true
+<script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']],
+    tags: 'ams',
+    packages: {'[+]': ['ams', 'html', 'base']}
+  },
+  loader: {
+    load: ['[tex]/html']
   }
-});
+};
 </script>
 <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-mml-chtml.min.js" integrity="sha512-9DkJEmXbL/Tdj8b1SxJ4H2p3RCAXKsu8RqbznEjhFYw0cFIWlII+PnGDU2FX3keyE9Ev6eFaDPyEAyAL2cEX0Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>

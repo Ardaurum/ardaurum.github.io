@@ -194,6 +194,13 @@
 .post-link {
   display: block;
   font-size: 24px;
+  text-shadow: none;
+  text-decoration: none;
+  color: #E8E8E8;
+}
+
+.post a {
+  color: #32F099;
 }
 
 /**

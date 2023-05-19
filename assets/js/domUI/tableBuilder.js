@@ -4,6 +4,7 @@ export function TableItem(init) {
   this.color = init.color == null ? 0xFFFFFF : init.color;
   this.format = init.format == null ? (val) => { return val; } : init.format;
 	this.strConversion = init.strConversion == null ? (val) => { return val; } : init.strConversion;
+  this.customInputAction = init.customInputAction;
 }
 
 export class TableBuilder {
@@ -42,6 +43,11 @@ export class RowBuilder {
     this.row = document.createElement('tr');
   }
 
+  addEmpty() {
+    this.row.appendChild(document.createElement('td'));
+    return this;
+  }
+
   addLabel(item) {
     let cell = document.createElement('td');
     if (item.value.subscribe) {
@@ -73,6 +79,9 @@ export class RowBuilder {
       input.addEventListener("change", () => {
         let result = item.strConversion(input.value);
         item.value.set(result);
+        if (item.customInputAction) {
+          item.customInputAction(result);
+        }
       });
       cell.appendChild(input);
     } else {

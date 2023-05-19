@@ -1,7 +1,5 @@
-import {
-  float2
-} from './math/float2.js'
-import * as PIXI from '../vendor/pixi.min.js'
+import { float2 } from './math/float2.js'
+import * as PIXI from '../external/pixi.min.mjs'
 import { Event } from './core/events.js';
 
 export function Label(text, color, fontSize) {
@@ -26,15 +24,37 @@ export function Data() {
   };
 }
 
+export const AngleDisplayDefaults = {
+  radius: 20,
+  color: 0xE6E6E6,
+  size: 4
+}
+
+export function AngleDisplayInitData(init) {
+  init = init || {};
+  this.radius = init.radius == null ? AngleDisplayDefaults.radius : init.radius;
+  this.color = init.color == null ? AngleDisplayDefaults.color : init.color;
+  this.size = init.size == null ? AngleDisplayDefaults.size : init.size;
+}
+
+export const PointDefaults = {
+  size: 10,
+  lineSize: 6,
+  color: 0xE6E6E6
+}
+
 export function PointInitData(init) {
   init = init || {};
   this.x = init.x == null ? 0 : init.x;
   this.y = init.y == null ? 0 : init.y;
-  this.color = init.color == null ? 0xE6E6E6 : init.color;
+  this.color = init.color == null ? PointDefaults.color : init.color;
   this.visible = init.visible == null ? true : init.visible;
+  this.angleDisplay = init.angleDisplay == null ? [] : init.angleDisplay;
   this.interactive = init.interactive == null ? true : init.interactive;
   this.lineFrom = init.lineFrom == null ? [] : init.lineFrom;
-  this.size = init.size == null ? 8 : init.size;
+  this.lineSize = init.lineSize == null ? PointDefaults.lineSize : init.lineSize;
+  this.size = init.size == null ? PointDefaults.size : init.size;
+  this.customRender = init.customRender;
 }
 
 export class Point {
@@ -51,34 +71,17 @@ export class Point {
 
     this.size = pointData.size;
     this.lineFrom = pointData.lineFrom;
+    this.angleDisplay = pointData.angleDisplay;
+    this.customRender = pointData.customRender;
 
     graphics.visible = pointData.visible;
     graphics.interactive = pointData.interactive;
     graphics.buttonMode = pointData.interactive;
     graphics.color = pointData.color;
 
-    function onDragStart(event) {
-      this.dragging = true;
-      this.data = event.data;
-    }
-
-    function onDragEnd() {
-      this.dragging = false;
-      this.data = null;
-    }
-
-    function onDragMove() {
-      if (this.dragging) {
-        const newPos = this.data.getLocalPosition(this.parent);
-        this.point.setScreenXY(newPos.x, newPos.y);
-      }
-    }
-
     if (pointData.interactive) {
-      graphics.on('pointerdown', onDragStart)
-        .on('pointerup', onDragEnd)
-        .on('pointerupoutside', onDragEnd)
-        .on('pointermove', onDragMove);
+      graphics.on('pointerdown', context.onDragStart.bind(context, this.graphics), this.graphics);
+      graphics.cursor = 'pointer';
 
       graphics.hitArea = new PIXI.Circle(0, 0, pointData.size);
     }
@@ -146,6 +149,7 @@ export class Graph {
 
 		this.app.onResize.addEventListener(this.resize.bind(this));
     this.prepareBackground();
+    this.initInteractivity();
 
     //LINES
     let lines = new PIXI.Graphics();
@@ -171,7 +175,7 @@ export class Graph {
         y: app.screen.height / 2.0,
       }
     };
-  };
+  }
 
   prepareBackground() {
     //GRID
@@ -194,13 +198,28 @@ export class Graph {
     }
 
     //AXIS
+    let halfWidth = this.app.screen.width / 2.0;
+    let halfHeight = this.app.screen.height / 2.0;
+
     this.graphics.lineStyle(this.data.axis.lineSize, this.data.axis.yColor);
-    this.graphics.moveTo(this.app.screen.width / 2.0, 0);
-    this.graphics.lineTo(this.app.screen.width / 2.0, this.app.screen.height);
+    this.graphics.moveTo(halfWidth, this.app.screen.height);
+    this.graphics.lineTo(halfWidth, 2);
+    this.graphics.beginFill(this.data.axis.yColor);
+    this.graphics.moveTo(halfWidth, 1);
+    this.graphics.lineTo(halfWidth - 6, 8);
+    this.graphics.lineTo(halfWidth + 6, 8);
+    this.graphics.lineTo(halfWidth, 1);
+    this.graphics.endFill();
 
     this.graphics.lineStyle(this.data.axis.lineSize, this.data.axis.xColor);
-    this.graphics.moveTo(0, this.app.screen.height / 2.0);
-    this.graphics.lineTo(this.app.screen.width, this.app.screen.height / 2.0);
+    this.graphics.moveTo(0, halfHeight);
+    this.graphics.lineTo(this.app.screen.width, halfHeight);
+    this.graphics.beginFill(this.data.axis.yColor);
+    this.graphics.moveTo(this.app.screen.width - 1, halfHeight);
+    this.graphics.lineTo(this.app.screen.width - 8, halfHeight - 6);
+    this.graphics.lineTo(this.app.screen.width - 8, halfHeight + 6);
+    this.graphics.lineTo(this.app.screen.width - 1, halfHeight);
+    this.graphics.endFill();
 
     //AXIS NAMES
     if (!this.xText) {
@@ -223,6 +242,38 @@ export class Graph {
     this.yText.y = 10;
   }
 
+  onDragMove(event) {
+    if (this.dragging) {
+      const newPos = this.dragTarget.parent.toLocal(event.global, null, this.dragTarget.position);
+      this.dragTarget.point.setScreenXY(newPos.x, newPos.y);
+    }
+  }
+
+  onDragStart(target) {
+    this.dragging = true;
+    this.dragTarget = target;
+    this.dragTarget.onMove = this.onDragMove.bind(this);
+    this.app.stage.on('pointermove', this.dragTarget.onMove);
+  }
+
+  onDragEnd() {
+    if (this.dragging)
+    {
+      this.app.stage.off('pointermove', this.dragTarget.onMove);
+      this.dragging = false;
+      this.dragTarget = null;
+    }
+  }
+
+  initInteractivity() {
+    this.dragging = false;
+    this.dragTarget = null;
+    this.app.stage.interactive = true;
+    this.app.stage.hitArea = this.app.screen;
+    this.app.stage.on('pointerup', this.onDragEnd.bind(this));
+    this.app.stage.on('pointerupoutside', this.onDragEnd.bind(this));
+  }
+
   resize() {
     this.points.forEach(function (point) {
       point.setXY(point.pos.x, point.pos.y);
@@ -234,36 +285,48 @@ export class Graph {
   }
 
   render() {
+    let app = this.app;
     let lines = this.lines;
     lines.clear();
 
     this.points.forEach(function (point) {
       point.graphics.clear();
       point.graphics.lineStyle(0);
-      point.graphics.beginFill(point.graphics.color, 1.0);
 			let size = point.size;
 			if (point.graphics.interactive)
 			{
+        point.graphics.beginFill(point.graphics.color, 1.0);
       	point.graphics.drawCircle(0, 0, size);
+        point.graphics.endFill();
 			}
 			else
 			{
+        point.graphics.beginFill(0x212123, 1.0);
+        point.graphics.lineStyle(size / 2.0, point.graphics.color);
 				point.graphics.drawRoundedRect(-size, -size, size * 2.0, size * 2.0, 1);
+        point.graphics.endFill();
 			}
       point.lineFrom.forEach(function (from) {
         lines.lineStyle(from.size || 4, from.color || point.graphics.color);
         lines.moveTo(from.point.graphics.x, from.point.graphics.y);
         lines.lineTo(point.graphics.x, point.graphics.y);
       });
-      point.graphics.endFill();
+
+      if (point.angleDisplay)
+      {
+        point.graphics.lineStyle(point.angleDisplay.size, point.angleDisplay.color);
+        point.graphics.arc(0, 0, point.angleDisplay.radius, 0, -Math.atan2(point.pos.y, point.pos.x), true);
+      }
+
+      if (point.customRender)
+      {
+        point.customRender(point);
+      }
     });
   }
 
   addPoint(pointData) {
-    let point = new Point({
-      app: this.app,
-      maxUnit: this.maxUnit
-    }, pointData);
+    let point = new Point(this, pointData);
     this.points.push(point);
     return point;
   }

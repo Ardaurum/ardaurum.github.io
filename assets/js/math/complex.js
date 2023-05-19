@@ -60,23 +60,4 @@ export class complex {
   equals(v) {
     return this.a == v.a && this.b == v.b;
   }
-
-  length() {
-    let c = Math.abs(this.a);
-    let d = Math.abs(this.b);
-
-    if (c > d) {
-        let r = d / c;
-        return c * Math.sqrt(1.0 + r * r);
-    } else if (d == 0.0) {
-        return c;
-    } else {
-        let r = c / d;
-        return d * Math.sqrt(1.0 + r * r);
-    }
-  }
-
-  normalize() {
-    return v.divScalar(v.length());
-  }
 }

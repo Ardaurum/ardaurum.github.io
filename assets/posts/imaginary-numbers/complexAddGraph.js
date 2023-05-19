@@ -2,6 +2,7 @@ import * as Cartesian from '../../js/cartesianDrawer.js'
 import { canvasScripts } from '../../js/canvasScripts.js'
 import { TableBuilder, RowBuilder, TableItem } from '../../js/domUI/tableBuilder.js'
 import { BindableObject } from '../../js/core/bindables.js'
+import { colorPalette } from '../../js/graphics/palette.js'
 
 canvasScripts.set('complexAddGraph', {
   time: 0,
@@ -16,17 +17,18 @@ canvasScripts.set('complexAddGraph', {
     this.graph = new Cartesian.Graph(gfxContext, data);
 
     this.vecA = this.graph.addPoint(
-      new Cartesian.PointInitData({ x: 2, y: 2, color: 0xAA2222, lineFrom: [{point: this.graph.center}] })
+      new Cartesian.PointInitData({ x: 2, y: 2, color: colorPalette[0], lineFrom: [{point: this.graph.center}] })
     );
     this.vecB = this.graph.addPoint(
-      new Cartesian.PointInitData({ x: -2, y: 2, color: 0x22AA22, lineFrom: [{point: this.graph.center}] })
+      new Cartesian.PointInitData({ x: -2, y: 2, color: colorPalette[1], lineFrom: [{point: this.graph.center}] })
     );
     this.addVec = this.graph.addPoint(
       new Cartesian.PointInitData({
-      color: 0xBBBB22,
-      lineFrom: [{point: this.vecB, color: 0xAA2222}, {point: this.vecA, color: 0x22AA22}],
-      interactive: false
-    }));
+        color: colorPalette[2],
+        lineFrom: [{point: this.vecB, color: colorPalette[0]}, {point: this.vecA, color: colorPalette[1]}],
+        interactive: false
+      })
+    );
 
     let parameterDOM = document.getElementById("complex-add-cartesian-data");
     let valFormat = (val) => { return val.toFixed(2); };
@@ -53,6 +55,12 @@ canvasScripts.set('complexAddGraph', {
         .toRow()
       )
       .addRow(new RowBuilder()
+        .addLabel(new TableItem({ value: "+" }))
+        .addEmpty()
+        .addEmpty()
+        .toRow()
+      )
+      .addRow(new RowBuilder()
         .addLabel(new TableItem({ value: "B", color: this.vecB.graphics.color }))
         .addInput(new TableItem({
           value: new BindableObject(this.vecB.getX.bind(this.vecB), this.vecB.setX.bind(this.vecB), this.vecB.onChanged),
@@ -64,6 +72,12 @@ canvasScripts.set('complexAddGraph', {
           format: valFormat,
           strConversion: strConversion
         }))
+        .toRow()
+      )
+      .addRow(new RowBuilder()
+        .addLabel(new TableItem({ value: "=" }))
+        .addEmpty()
+        .addEmpty()
         .toRow()
       )
       .addRow(new RowBuilder()

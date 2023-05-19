@@ -1,4 +1,4 @@
-import * as PIXI from '../vendor/pixi.min.js'
+import * as PIXI from '../external/pixi.min.mjs'
 import { canvasScripts } from './canvasScripts.js'
 import { Event } from './core/events.js'
 

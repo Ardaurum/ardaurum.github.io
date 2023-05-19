@@ -1,4 +1,4 @@
-class IBindable {
+export class Bindable {
   constructor() {
     this.observers = new Set();
   }
@@ -24,13 +24,13 @@ class IBindable {
   }
 }
 
-export class BindableValue extends IBindable {
+export class BindableValue extends Bindable {
   constructor(initVal) {
     super();
     this.val = initVal;
   }
 
-  get() { this.val; }
+  get() { return this.val; }
   set(val) { 
     if (this.val == val) return;
 
@@ -39,7 +39,7 @@ export class BindableValue extends IBindable {
   }
 }
 
-export class BindableObject extends IBindable {
+export class BindableObject extends Bindable {
   constructor(get, set, event) {
     super();
     this.getMethod = get;

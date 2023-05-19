@@ -1,15 +1,29 @@
-import * as THREE from '../vendor/three.min.js'
+import * as THREE from '../external/three.min.js'
 
 var WebGLRenderer = {
 	clock: {},
 	gfxContexts: [],
 
 	init: function () {
-		const views = document.getElementsByClassName("shader-view");
+		const views = [...document.getElementsByClassName("shader-view")];
 		this.clock = new THREE.Clock();
 
-		for (const view of views) {
-			gfxContext = {};
+		const requests = views.map((view) => {
+			return fetch(view.getAttribute("fragment-src"))
+				.then((response) => response.text())
+				.then((responseText) => [view, responseText]);
+		});
+
+		Promise.all(requests)
+			.then(responses => {
+				this.initializeShaders(responses);
+			})
+			.catch(error => console.log("Failed loading fragment shader: " + error));
+	},
+
+	initializeShaders: async function(responses) {
+		responses.forEach(([view, fragmentSrc]) => {
+			let gfxContext = {};
 			gfxContext.view = view;
 			gfxContext.camera = new THREE.PerspectiveCamera(75, view.offsetWidth / view.offsetHeight, 0.1,
 				1000);
@@ -33,7 +47,7 @@ var WebGLRenderer = {
 			let material = new THREE.ShaderMaterial({
 				uniforms: gfxContext.uniforms,
 				vertexShader: document.getElementById("full-screen-triangle").textContent,
-				fragmentShader: document.getElementById(view.getAttribute("fragment-src")).textContent
+				fragmentShader: fragmentSrc
 			});
 
 			const geometry = new THREE.BufferGeometry();
@@ -45,7 +59,7 @@ var WebGLRenderer = {
 
 			this.gfxContexts.push(gfxContext);
 			view.appendChild(gfxContext.renderer.domElement);
-		}
+		});
 
 		this.onWindowResize();
 		window.addEventListener('resize', this.onWindowResize, false);

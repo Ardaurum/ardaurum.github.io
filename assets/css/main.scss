@@ -10,7 +10,7 @@ $base-line-height: 1.5;
 
 $spacing-unit:     30px;
 
-$brand-color:      #4E9F3D;
+$brand-color:      #32F099;
 
 $grey-color:       #828282;
 $grey-color-light: lighten($grey-color, 40%);
@@ -19,13 +19,18 @@ $grey-color-dark:  darken($grey-color, 25%);
 $on-palm:          600px;
 $on-laptop:        800px;
 
-$palette-bg: #191A19;
-$palette-header-bg: #1D1F1D;
-$palette-main: #1E5128;
-$palette-light: #4E9F3D;
-$palette-highlight: #D8E9A8;
+$palette-bg: #212123;
+$palette-header-bg: #242426;
+$palette-main: #F06B56;
+$palette-light: #32F099;
+$palette-highlight: #F0AE26;
 $palette-text: #e1e1e1;
 
+$palette-0: #4A88F0;
+$palette-1: #F0AE26;
+$palette-2: #32F099;
+$palette-3: #F06B56;
+$palette-4: #3FDEF0;
 
 // Using media queries with like this:
 // @include media-query($palm) {

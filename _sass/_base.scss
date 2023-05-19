@@ -477,7 +477,6 @@ h1, h2, h3, h4, h5, h6 {
 
 .canvas-view-wrapper {
 	width: 90%;
-	padding: 0 10% 0 10%;
 	overflow: hidden;
 }
 
@@ -497,13 +496,13 @@ h1, h2, h3, h4, h5, h6 {
 	}
 
 	@include media-query($on-laptop) {
-    width: min(80%, max(50%, 300px));
+    width: 100%;
 		float: none;
 		margin: auto;
 	}
 }
 
-.shader-view, .canvas-view {
+.canvas-view {
   width: min(55%, 500px);
   padding-bottom: min(55%, 500px);
 
@@ -518,6 +517,39 @@ h1, h2, h3, h4, h5, h6 {
 		float: none;
   }
 }
+
+.shader-view {
+  width: min(55%, 500px);
+  padding-bottom: min(55%, 500px);
+
+  height: 0;
+  margin: auto;
+  margin-top: 16px;
+  margin-bottom: 16px;
+  float: center;
+
+  @include media-query($on-laptop) {
+    width: min(80%, 350px);
+    padding-bottom: min(80%, 350px);
+		float: none;
+  }
+}
+
+.center-iframe-wrapper
+{
+  text-align: center;
+}
+
+.center-iframe
+{
+  margin: auto;
+}
+
+.palette-0 { color: $palette-0 }
+.palette-1 { color: $palette-1 }
+.palette-2 { color: $palette-2 }
+.palette-3 { color: $palette-3 }
+.palette-4 { color: $palette-4 }
 
 /**
  * Icons
