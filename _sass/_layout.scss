@@ -11,8 +11,8 @@
 }
 
 .site-title {
-  font-size: 26px;
-  line-height: 26px;
+  font-size: 48px;
+  line-height: 48px;
   padding-bottom: 6px;
   letter-spacing: -1px;
   margin-bottom: 0;
@@ -22,7 +22,7 @@
 .site-nav {
   float: right;
   background-color: $palette-header-bg;
-  line-height: 64px;
+  line-height: 86px;
 
   .menu-icon {
     display: none;
@@ -30,10 +30,12 @@
 
   .page-link {
     line-height: $base-line-height;
+    margin: auto;
+    font-size: 20px;
 
     // Gaps between nav items, but not on the first one
     &:not(:first-child) {
-      margin-left: 20px;
+      margin-left: 32px;
     }
   }
 
@@ -197,6 +199,10 @@
   text-shadow: none;
   text-decoration: none;
   color: #E8E8E8;
+}
+
+.post-tag-link {
+  color: #32F099;
 }
 
 .post a {

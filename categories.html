@@ -6,14 +6,16 @@ permalink: /categories/
 
 <div class="categories">
 
-	<h1 class="page-heading">Categories</h1>
+  <header class="post-header">
+    <h1 class="post-title">Categories</h1>
+  </header>
 
   {% assign categories = site.categories | sort %}
   {% for category in categories %}
 
     {% assign categoryName = category[0] %}
     {% assign categoryPostsNumber = category[1] | size %}
-    <h2> {{ categoryName }} - {{ categoryPostsNumber }} </h2>
+    <h2><a class="post-tag-link" href="{{ site.baseurl }}{{ categoryName }}">{{ categoryName }} - {{ categoryPostsNumber }}</a></h2>
     
     <ul class="post-list">
       {% assign sortedPosts = category[1] | reversed %}

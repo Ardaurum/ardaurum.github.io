@@ -6,7 +6,7 @@ categories: [Math]
 ---
 Complex numbers sound like a crazy idea. We have an imaginary part that has a rather curious property. It contains an __imaginary unit__ which we mark as $$ i $$ and it satisfies an equation $$ i^2 = -1 $$. Sounds like some crazy idea which someone just created as a brain challenge. And as a matter of fact it was at the start. This tool was created to solve cubic equations which contained root of negative numbers. In geometric sense it doesn't make sense, because how a figure with a negative size can exist. However it was used as an intermediate step to calculate a proper solution. And for another couple hundred of years it was just that until Euler and later Schrödinger. Schrödinger's most famous equation which is widely used in quantum-machnics contains an imaginary number.
 
-$$ i \hbar \frac{\partial}{\partial t} \psi = H\psi $$
+$$ \class{palette-2}{i} \hbar \frac{\partial}{\partial t} \psi = H\psi $$
 
 Why something that was deemed as *imaginary* and *useless* could be a part of something so fundamental in physics? And how this knowledge is useful for game programmers? To get to that answer we need to go through quite a bit of theory about complex numbers and it's different forms.
 
@@ -19,7 +19,7 @@ If we look at complex number in form $$ \class{palette-3}{x} + \class{palette-2}
 #### Polar Form
 ---
 
-However the magic is hidden in the multiplication of complex numbers. If you take one complex number and multiply it by another one then we are adding the angles that the complex vectors represent (as well as scale the complex vector). It might be a little bit hard to wrap a head around that, but here's another interactive graph to show that. The graph shows complex numbers in both complex and polar form.
+However, the magic is hidden in the multiplication of complex numbers. If you take one complex number and multiply it by another one then we are adding the angles that the complex vectors represent (as well as scale the complex vector). It might be a little bit hard to wrap a head around that, but here's another interactive graph to show that. The graph shows complex numbers in both complex and polar form.
 
 {% include_relative complexMultiplyGraph.html %}
 

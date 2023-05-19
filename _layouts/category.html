@@ -1,0 +1,28 @@
+---
+layout: default
+---
+<div class="category">
+
+  <header class="post-header">
+    <h1 class="post-title">Category - {{ page.title }}</h1>
+  </header>
+
+  {% assign selectedCategory = page.title %}
+  {% for category in site.categories %}
+    {% if category[0] == selectedCategory %}
+      {% assign categoryName = category[0] %}
+      {% assign categoryPostsNumber = category[1] | size %}
+      <h2> {{ categoryName }} - {{ categoryPostsNumber }} </h2>
+
+      <ul class="post-list">
+        {% assign sortedPosts = category[1] | reversed %}
+        {% for post in sortedPosts %}
+          <li>
+            <a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a><span>
+              - {{ post.date | date: "%b %-d, %Y" }}</span>
+          </li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  {% endfor %}
+</div>

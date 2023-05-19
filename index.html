@@ -10,6 +10,13 @@ layout: default
     {% for post in site.posts %}
       <li>
         <span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>
+        <span class="post-tags">
+          -
+          {% assign categories = post.categories | sort %}
+          {% for category in categories %}
+            <a class="post-tag-link" href="{{ site.baseurl }}categories/{{ category }}">\{{ category }}</a>
+          {% endfor %}
+        </span>
 
         <h2>
           <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
