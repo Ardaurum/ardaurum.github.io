@@ -52,7 +52,6 @@ var WebGLRenderer = {
 
 			const geometry = new THREE.BufferGeometry();
 			geometry.setIndex([0, 1, 2]);
-			geometry.setAttribute('id', new THREE.BufferAttribute(new Int32Array([0, 1, 2]), 1));
 			const mesh = new THREE.Mesh(geometry, material);
 			mesh.frustumCulled = false;
 			gfxContext.scene.add(mesh);

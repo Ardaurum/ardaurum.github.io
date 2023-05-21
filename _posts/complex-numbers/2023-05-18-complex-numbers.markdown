@@ -2,8 +2,14 @@
 layout:     post
 title:      "Complex Numbers: a way to quaternions"
 date:       2023-05-18 21:23:00 +0100
+image:      assets/images/post_images/complex_numbers.jpg
 categories: [Math]
 ---
+
+Complex numbers can be found in a lot of places, from physics to computer graphics. Understanding them and their properties will help you understand further concept used in computer games.
+
+<!-- meat -->
+
 Complex numbers sound like a crazy idea. We have an imaginary part that has a rather curious property. It contains an __imaginary unit__ which we mark as $$ i $$ and it satisfies an equation $$ i^2 = -1 $$. Sounds like some crazy idea which someone just created as a brain challenge. And as a matter of fact it was at the start. This tool was created to solve cubic equations which contained root of negative numbers. In geometric sense it doesn't make sense, because how a figure with a negative size can exist. However it was used as an intermediate step to calculate a proper solution. And for another couple hundred of years it was just that until Euler and later Schrödinger. Schrödinger's most famous equation which is widely used in quantum-machnics contains an imaginary number.
 
 $$ \class{palette-2}{i} \hbar \frac{\partial}{\partial t} \psi = H\psi $$

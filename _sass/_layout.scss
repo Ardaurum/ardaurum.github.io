@@ -180,12 +180,24 @@
 }
 
 .post-list {
-  margin-left: 15px;
-  list-style: none;
 
-  >li {
-    margin-bottom: $spacing-unit;
-  }
+}
+
+.post-tile {
+  border: solid white;
+  float: left;
+  position: relative;
+  width: 30%;
+  padding: 0.5%;
+  margin: 0.5%;
+}
+
+.post-image {
+
+}
+
+.post-text {
+
 }
 
 .post-meta {

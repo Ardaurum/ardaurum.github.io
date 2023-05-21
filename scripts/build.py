@@ -1,3 +1,5 @@
+#! /usr/bin/env python
+
 import os
 import re
 import time
@@ -44,6 +46,5 @@ for category in allCategories:
     with open(file_path, "w") as file:
         file.write(categoryFileHeader.format(category))
 
-elapsedTime = time.time() - startTime
 print("Script took: ", round(time.time() - startTime, 4), "seconds.")
 print("=========================")

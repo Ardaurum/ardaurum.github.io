@@ -1,6 +1,8 @@
 uniform vec2 u_resolution;
 uniform float u_time;
 
+in vec2 v_uv;
+
 const float PI = 3.14;
 
 const float ANGLE_SPEED = 1.8;
@@ -11,7 +13,7 @@ const float VARIANCE_SIZE = 0.24;
 
 float hash(float value)
 {
-	return fract(sin(value * 23638.4851));
+	return fract(sin(value) * 23638.4851);
 }
 
 float cellHash(float value, float cellSize)
@@ -42,7 +44,7 @@ vec2 spiral(vec2 uv)
 }
 
 void main() {
-	vec2 uv = (gl_FragCoord.xy / u_resolution.xy) * 2.0 - 1.0;
+	vec2 uv = v_uv * 2.0 - 1.0;
 	vec2 spiralValues = spiral(uv);
 	gl_FragColor = clamp(vec4(spiralValues.x, spiralValues.x * (1.0 - spiralValues.y - 0.3), spiralValues.x * (spiralValues.y - 0.3), 1.0), 0.0, 1.0);
 }
