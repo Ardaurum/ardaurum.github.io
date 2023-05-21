@@ -188,8 +188,9 @@
   float: left;
   position: relative;
   width: 30%;
-  padding: 0.5%;
+  padding: 0.7%;
   margin: 0.5%;
+  height: 600px;
 
   @include media-query($on-palm) {
     font-size: 16px;
@@ -199,7 +200,16 @@
 }
 
 .post-image {
+  display: inline-block;
+  margin-bottom: 10px;
+}
 
+.post-image a {
+  display: inline-block;
+}
+
+.post-link {
+  height: 72px;
 }
 
 .post-text {
